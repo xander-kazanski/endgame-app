@@ -66,11 +66,8 @@ export default function AssemblyEndgame() {
   function RenderBanner({ won, isOver, farwell, currentLanguage }) {
     let title;
     let message;
-    console.log(currentLanguage)
+
     const status = (function () {
-      if (currentLanguage.length === 0) {
-        return
-      }
       if (won && isOver) {
         title = "You win!"
         message = "Well done! 🎉"
@@ -79,7 +76,11 @@ export default function AssemblyEndgame() {
         title = "Game over!"
         message = "You loose! Better start learning Assembly 😭"
         return 'loose';
-      } else {
+      } else if (won || isOver) {
+        title = "You win!"
+        message = "Well done! 🎉"
+        return 'win';
+      } else if (!currentLanguage.length) {} else {
         title = `"Farwell ${currentLanguage.join(" & ")} 🫡"`
         return 'farwell'
       }
