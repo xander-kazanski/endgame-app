@@ -2,24 +2,11 @@ import React, { useEffect, useState } from "react"
 import { languages } from "./languages"
 import clsx from "clsx"
 import Language from "./Language"
+import Letter from "./Letter"
 
-Language
-function Letter({ letter, show, lost, guessedLetters}) {
-  return <p className={`letter ${lost && !guessedLetters.includes(letter) ? "red-letter" : ''}`}>{show === true || lost ? letter.toUpperCase() : ''}</p>
-}
-function Key({ letter, onClick, keyClass, disabled }) {
-  const selectionClass = keyClass(letter);
 
-  return (
-    <button
-      onClick={() => onClick(letter)}
-      className={`key ${selectionClass}`}
-      disabled={disabled}
-    >
-      {letter.toUpperCase()}
-    </button>
-  )
-}
+
+
 export default function AssemblyEndgame() {
   const [currentWord, setCurrentWord] = useState("react");
   const [guessedLetters, setGuessedLetters] = useState([]);
