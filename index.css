@@ -75,6 +75,10 @@ header>p {
   }
 }
 
+p.red-letter {
+  color: #EC5D49;
+}
+
 
 
 .status>.message {

@@ -10,8 +10,8 @@ function Language({ name, color, backgroundColor, wrongCount, idx }) {
     <p className={`language ${clsx({ lost: isLost === true })}`} style={styles}>{name}</p>
   )
 }
-function Letter({ letter, show }) {
-  return <p className="letter">{show === true && letter.toUpperCase()}</p>
+function Letter({ letter, show, lost, guessedLetters}) {
+  return <p className={`letter ${lost && !guessedLetters.includes(letter) ? "red-letter" : ''}`}>{show === true || lost ? letter.toUpperCase() : ''}</p>
 }
 function Key({ letter, onClick, keyClass, disabled }) {
   const selectionClass = keyClass(letter);
@@ -48,7 +48,7 @@ export default function AssemblyEndgame() {
       setGuessedLetters(prevLetters => [...prevLetters, letter])
     }
   }
-  
+
   function getKeyClass(letter) {
     if (currentWord.includes(letter) && guessedLetters.includes(letter)) {
       return clsx({ right: true })
@@ -63,11 +63,11 @@ export default function AssemblyEndgame() {
     setGuessedLetters([])
   }
 
-  function RenderBanner({won, isOver, farwell, currentLanguage}) {
+  function RenderBanner({ won, isOver, farwell, currentLanguage }) {
     let title;
     let message;
     console.log(currentLanguage)
-    const status = (function() {
+    const status = (function () {
       if (currentLanguage.length === 0) {
         return
       }
@@ -84,7 +84,7 @@ export default function AssemblyEndgame() {
         return 'farwell'
       }
     })()
-    
+
     return (
       <div className={`status ${status}`}>
         <p className="title">{title}</p>
@@ -93,6 +93,7 @@ export default function AssemblyEndgame() {
     )
   }
   const currentLanguage = guessedLetters.length ? languages.slice(0, wrongCount).map(language => language.name) : []
+  const lost = !won && isOver;
   return (
     <main>
       <header>
@@ -108,7 +109,7 @@ export default function AssemblyEndgame() {
       </div>
       <div className="letters">
         {currentWord.split("").map((letter, idx) => {
-          return <Letter key={letter + idx} idx={idx} letter={letter} show={guessedLetters.includes(letter)} />
+          return <Letter key={letter + idx} guessedLetters={guessedLetters} lost={lost} letter={letter} show={guessedLetters.includes(letter)} />
         })}
       </div>
       <div className="keyboard">
