@@ -83,9 +83,11 @@ header>p {
 .letters {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.125em;
   margin: 2.25em auto 0 auto;
   font-family: "Hanken Grotesk", sans-serif;
+  max-width: 22.9375rem;
 }
 
 .letter {
