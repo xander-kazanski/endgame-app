@@ -5,9 +5,9 @@ import clsx from "clsx"
 function Language({ name, color, backgroundColor, wrongCount, idx }) {
   const styles = { color, backgroundColor }
   const isLost = wrongCount > 0 && idx < wrongCount;
-  
+
   return (
-    <p className={`language ${clsx({lost: isLost === true})}`}  style={styles}>{name}</p>
+    <p className={`language ${clsx({ lost: isLost === true })}`} style={styles}>{name}</p>
   )
 }
 function Letter({ letter, show }) {
@@ -36,7 +36,7 @@ export default function AssemblyEndgame() {
   }).length
 
   const isOver = wrongCount >= languages.length
-  
+
   const won = guessedLetters.filter(letter => {
     return currentWord.includes(letter)
   }).length === currentWord.length && wrongCount <= languages.length;
@@ -48,7 +48,7 @@ export default function AssemblyEndgame() {
       setGuessedLetters(prevLetters => [...prevLetters, letter])
     }
   }
-
+  
   function getKeyClass(letter) {
     if (currentWord.includes(letter) && guessedLetters.includes(letter)) {
       return clsx({ right: true })
@@ -63,6 +63,36 @@ export default function AssemblyEndgame() {
     setGuessedLetters([])
   }
 
+  function RenderBanner({won, isOver, farwell, currentLanguage}) {
+    let title;
+    let message;
+    console.log(currentLanguage)
+    const status = (function() {
+      if (currentLanguage.length === 0) {
+        return
+      }
+      if (won && isOver) {
+        title = "You win!"
+        message = "Well done! 🎉"
+        return 'win'
+      } else if (!won && isOver) {
+        title = "Game over!"
+        message = "You loose! Better start learning Assembly 😭"
+        return 'loose';
+      } else {
+        title = `"Farwell ${currentLanguage.join(" & ")} 🫡"`
+        return 'farwell'
+      }
+    })()
+    
+    return (
+      <div className={`status ${status}`}>
+        <p className="title">{title}</p>
+        <p className="message">{message}</p>
+      </div>
+    )
+  }
+  const currentLanguage = guessedLetters.length ? languages.slice(0, wrongCount).map(language => language.name) : []
   return (
     <main>
       <header>
@@ -70,13 +100,9 @@ export default function AssemblyEndgame() {
         <p>Guess the word within 8 attempts to keep the
           programming world safe from Assembly!</p>
       </header>
-      {(isOver === true) || (won === true) ? <div className={`status ${clsx({win: won === true, loose: won === false})}`}>
-        <p className="title">{won ? 'You win!' : 'Game over!' }</p>
-        <p className="message">{won ? 'Well done! 🎉' : 'You lose! Better start learning Assembly 😭'}</p>
-      </div> : ''}
+      <RenderBanner won={won} isOver={isOver} farwell={!won || !isOver} currentLanguage={currentLanguage} />
       <div className="languages">
         {languages.map(({ name, backgroundColor, color }, idx) => {
-          
           return <Language key={name} name={name} wrongCount={wrongCount} idx={idx} backgroundColor={backgroundColor} color={color} />
         })}
       </div>

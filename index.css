@@ -43,7 +43,7 @@ header>p {
   padding: 0.75em;
   border-radius: 0.25rem;
   min-width: 22rem;
-  height: 4.4375rem;
+  min-height: 4.4375rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -65,6 +65,17 @@ header>p {
 .loose {
   background-color: #BA2A2A;
 }
+
+.farwell {
+  background-color: #7A5EA7;
+  font-style: italic;
+
+  .title {
+    font-size: 1rem;
+  }
+}
+
+
 
 .status>.message {
   margin: 0;
