@@ -31,15 +31,16 @@ export default function AssemblyEndgame() {
   const [guessedLetters, setGuessedLetters] = useState([]);
 
 
-
   const wrongCount = guessedLetters.filter(letter => {
     return !currentWord.includes(letter);
   }).length
+
   const isOver = wrongCount >= languages.length
+  
   const won = guessedLetters.filter(letter => {
     return currentWord.includes(letter)
   }).length === currentWord.length && wrongCount <= languages.length;
-  console.log(isOver, won)
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter) {
