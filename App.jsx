@@ -41,7 +41,8 @@ export default function AssemblyEndgame() {
         {alphabet.split("").map((letter, idx) => {
           return <Key key={letter + idx} letter={letter} />
           })}
-      </div> 
+      </div>
+      <button type="button" className="new-game">New Game</button>
     </main>
   )
 }

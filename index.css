@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+main {
+  text-align: center;
+}
+
 body {
   margin: 0;
   font-family: "Hanken Grotesk", Arial, sans-serif;
@@ -126,4 +130,17 @@ header>p {
   border: 0.125em solid #D7D7D7;
   font-weight: bold;
   font-family: "Hanken Grotesk", sans-serif;
+}
+
+.new-game {
+  min-width: 11.4375em;
+  min-height: 2.5em;
+  color: #1E1E1E;
+  font-family: "Hanken Grotesk", sans-serif;
+  margin: 2.25em 0 4.5625em 0;
+  background-color: #11B5E5;
+  border-radius: .25em;
+  border: none;
+  font-weight: bold;
+  border: solid 0.0625em #D7D7D7;
 }
