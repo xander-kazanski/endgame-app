@@ -39,8 +39,7 @@ header>p {
   margin: 0 0 1.875em 0;
 }
 
-.win {
-  background-color: #10A95B;
+.status {
   padding: 0.75em;
   border-radius: 0.25rem;
   min-width: 22rem;
@@ -51,7 +50,7 @@ header>p {
   align-items: center;
 }
 
-.win>.title {
+.status>.title {
   margin: 0;
   font-size: 1.625rem;
   font-family: "Hanken Grotesk", sans-serif;
@@ -59,7 +58,15 @@ header>p {
   color: #F9F4DA;
 }
 
-.win>.message {
+.win {
+  background-color: #10A95B;
+}
+
+.loose {
+  background-color: #BA2A2A;
+}
+
+.status>.message {
   margin: 0;
   font-size: 1rem;
   font-family: "Hanken Grotesk", sans-serif;
