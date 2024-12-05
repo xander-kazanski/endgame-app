@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { languages } from "./languages"
 import clsx from "clsx"
+import Language from "./Language"
 
-function Language({ name, color, backgroundColor, wrongCount, idx }) {
-  const styles = { color, backgroundColor }
-  const isLost = wrongCount > 0 && idx < wrongCount;
-
-  return (
-    <p className={`language ${clsx({ lost: isLost === true })}`} style={styles}>{name}</p>
-  )
-}
+Language
 function Letter({ letter, show, lost, guessedLetters}) {
   return <p className={`letter ${lost && !guessedLetters.includes(letter) ? "red-letter" : ''}`}>{show === true || lost ? letter.toUpperCase() : ''}</p>
 }
