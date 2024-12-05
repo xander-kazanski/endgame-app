@@ -1,32 +1,38 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: "Hanken Grotesk", Arial, sans-serif;
-    background-color: #262626;
-    color: #D9D9D9;
-    padding: 20px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
+  margin: 0;
+  font-family: "Hanken Grotesk", Arial, sans-serif;
+  background-color: #262626;
+  color: #D9D9D9;
+  padding: 1.25em;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
 header {
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-header > h1 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #F9F4DA;
+header>h1 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #F9F4DA;
+  margin: 0.75em auto;
 }
 
-header > p {
-    font-size: 0.875rem;
-    max-width: 350px;
-    color: #8E8E8E;
+header>p {
+  font-size: 0.875rem;
+  max-width: 21.875rem;
+  color: #8E8E8E;
+  text-align: center;
+  margin: 0 0 1.875em 0;
 }
 
 .win {
@@ -41,7 +47,7 @@ header > p {
   align-items: center;
 }
 
-.win > .title {
+.win>.title {
   margin: 0;
   font-size: 1.625rem;
   font-family: "Hanken Grotesk", sans-serif;
@@ -49,7 +55,7 @@ header > p {
   color: #F9F4DA;
 }
 
-.win > .message {
+.win>.message {
   margin: 0;
   font-size: 1rem;
   font-family: "Hanken Grotesk", sans-serif;
@@ -63,19 +69,59 @@ header > p {
   gap: 0.09375em;
   max-width: 22.9375rem;
   justify-content: center;
-  margin: 2.25rem 0 0 0;
+  margin: 2.25rem auto 0 auto;
 }
 
-.color {
+.language {
   border-radius: 0.375rem;
   padding: 0.5463em 0.5625em;
   margin: 0;
   font-weight: bold;
-}
-.color {
-  border-radius: 6px;
-  padding: 8.74px 9px;
-  margin: 0;
-  font-weight: bold;
+  font-family: "Hanken Grotesk", sans-serif;
 }
 
+.letters {
+  display: flex;
+  justify-content: center;
+  gap: 0.125em;
+  margin: 2.25em auto 0 auto;
+  font-family: "Hanken Grotesk", sans-serif;
+}
+
+.letter {
+  color: #F9F4DA;
+  padding: 1.125em;
+  width: 2.5em;
+  height: 2.5em;
+  border-bottom: 0.125em solid #F9F4DA;
+  background-color: #323232;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 0;
+}
+
+.keyboard {
+  max-width: 30rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.375em;
+  margin: 4rem auto auto auto;
+}
+
+.key {
+  width: 2.5em;
+  height: 2.5em;
+  color: #1E1E1E;
+  padding: 1.125em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-radius: 0.25rem;
+  border: 0.125em solid #D7D7D7;
+  font-weight: bold;
+  font-family: "Hanken Grotesk", sans-serif;
+}
