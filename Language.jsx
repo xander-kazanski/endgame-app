@@ -1,9 +1,12 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AssemblyContext } from './App';
 
-function Language({ name, color, backgroundColor, wrongCount, idx }) {
+function Language({ name, color, backgroundColor, idx }) {
+  const { wrongCount } = useContext(AssemblyContext);
   const styles = { color, backgroundColor }
   const isLost = wrongCount > 0 && idx < wrongCount;
+
 
   return (
     <p

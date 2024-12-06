@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AssemblyContext } from './App';
+import clsx from 'clsx';
 
-function Letter({ letter, show, lost, guessedLetters }) {
+function Letter({ letter }) {
+  const { won, isOver, guessedLetters } = useContext(AssemblyContext);
+  const lost = !won && isOver;
+  const show = guessedLetters.includes(letter);
+  const letterClass = clsx({ 'red-letter': lost && !show });
   return (
-    <p
-      className={`letter ${lost && !guessedLetters.includes(letter) ? "red-letter" : ''}`}
-    >
+    <p className={`letter ${letterClass}`}>
       {show === true || lost ? letter.toUpperCase() : ''}
     </p>
   )
