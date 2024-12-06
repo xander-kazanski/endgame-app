@@ -11,6 +11,7 @@ export const AssemblyContext = createContext({})
 export default function AssemblyEndgame() {
   const [currentWord, setCurrentWord] = useState("react");
   const [guessedLetters, setGuessedLetters] = useState([]);
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   const wrongGuesses = useCallback(() => {
     return guessedLetters.filter(letter => {
@@ -25,12 +26,10 @@ export default function AssemblyEndgame() {
   }, [guessedLetters]);
 
   const wrongCount = wrongGuesses().length
-
+  
   const isOver = wrongCount >= languages.length
-
   const won = rightGuesses().length === currentWord.length && wrongCount <= languages.length;
 
-  const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter) {
     if (!guessedLetters.includes(letter)) {
@@ -42,18 +41,16 @@ export default function AssemblyEndgame() {
     setGuessedLetters([])
   }
 
-  const currentLanguage = guessedLetters.length ? languages.slice(0, wrongCount).map(language => language.name) : []
-  const lost = !won && isOver;
-
+ 
   return (
     <AssemblyContext.Provider value={{
       won,
       isOver,
-      currentLanguage,
       wrongCount,
       guessedLetters,
       currentWord,
-      addGuessedLetter
+      addGuessedLetter,
+      languages
     }}>
 
       <main>

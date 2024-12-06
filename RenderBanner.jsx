@@ -4,8 +4,8 @@ import { AssemblyContext } from './App';
 function RenderBanner() {
   let title;
   let message;
-  const {won, isOver, currentLanguage} = useContext(AssemblyContext)
-
+  const {won, isOver, languages, guessedLetters, wrongCount} = useContext(AssemblyContext)
+  const currentLanguage = guessedLetters.length ? languages.slice(0, wrongCount).map(language => language.name) : []
 
   const status = (function () {
     if (won && isOver) {
