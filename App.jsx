@@ -5,13 +5,17 @@ import Language from "./Language"
 import Letter from "./Letter"
 import RenderBanner from "./RenderBanner"
 import Key from "./Key"
+import { words } from "./words"
 
 export const AssemblyContext = createContext({})
 
 export default function AssemblyEndgame() {
-  const [currentWord, setCurrentWord] = useState("react");
+  const [currentWord, setCurrentWord] = useState(words.random);
   const [guessedLetters, setGuessedLetters] = useState([]);
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+
 
   const wrongGuesses = useCallback(() => {
     return guessedLetters.filter(letter => {
@@ -26,7 +30,7 @@ export default function AssemblyEndgame() {
   }, [guessedLetters]);
 
   const wrongCount = wrongGuesses().length
-  
+
   const isOver = wrongCount >= languages.length
   const won = rightGuesses().length === currentWord.length && wrongCount <= languages.length;
 
@@ -39,9 +43,10 @@ export default function AssemblyEndgame() {
 
   function handleGameOverClick() {
     setGuessedLetters([])
+    setCurrentWord(words.random);
   }
 
- 
+
   return (
     <AssemblyContext.Provider value={{
       won,
@@ -80,6 +85,19 @@ export default function AssemblyEndgame() {
 
           })}
         </div>
+        <section className="sr-only" aria-live="polite" role="status">
+          <p>
+            {
+              currentWord.split('').includes(lastGuessedLetter) ? 
+                `Correct! The letter ${lastGuessedLetter} is in the word` : 
+                `Sorry, the letter ${lastGuessedLetter} is not in the word`
+            }
+          </p>
+          <p>Current Word: {
+          currentWord.split("").map(
+            letter => guessedLetters.includes(letter) ? letter : 'blank.').join(" ")
+          }</p>
+        </section>
         <div className="keyboard">
           {alphabet.split("").map((letter, idx) => {
             return <Key

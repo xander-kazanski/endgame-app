@@ -27,7 +27,7 @@ function RenderBanner() {
   })()
 
   return (
-    <div className={`status ${status}`}>
+    <div className={`status ${status}`} role="status">
       <p className="title">{title}</p>
       <p className="message">{message}</p>
     </div>
