@@ -8,20 +8,18 @@ function RenderBanner() {
   const currentLanguage = guessedLetters.length ? languages.slice(0, wrongCount).map(language => language.name) : []
 
   const status = (function () {
-    if (won && isOver) {
+    if (won) {
       title = "You win!"
       message = "Well done! 🎉"
       return 'win'
     } else if (!won && isOver) {
       title = "Game over!"
-      message = "You loose! Better start learning Assembly 😭"
+      message = "You lose! Better start learning Assembly 😭"
       return 'loose';
-    } else if (won || isOver) {
-      title = "You win!"
-      message = "Well done! 🎉"
-      return 'win';
-    } else if (!currentLanguage.length) { } else {
-      title = `"Farwell ${currentLanguage.join(" & ")} 🫡"`
+    } else if (!currentLanguage.length) {
+      return 'base';
+    } else {
+      title = `Farewell ${currentLanguage.join(" & ")} 🫡`
       return 'farwell'
     }
   })()

@@ -1,6 +1,5 @@
-import React, { createContext, useCallback, useEffect, useState } from "react"
+import React, { createContext, useCallback, useEffect, useState, useMemo } from "react"
 import { languages } from "./languages"
-import clsx from "clsx"
 import Language from "./Language"
 import Letter from "./Letter"
 import RenderBanner from "./RenderBanner"
@@ -16,24 +15,21 @@ export default function AssemblyEndgame() {
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
   const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
 
+  const wrongGuesses = useMemo(() => {
+    return guessedLetters.filter(letter => !currentWord.includes(letter));
+  }, [guessedLetters, currentWord]);
 
-  const wrongGuesses = useCallback(() => {
-    return guessedLetters.filter(letter => {
-      return !currentWord.includes(letter);
-    })
-  }, [guessedLetters]);
+  const uniqueLettersInWord = useMemo(() => {
+    return new Set(currentWord.split('')).size;
+  }, [currentWord]);
 
-  const rightGuesses = useCallback(() => {
-    return guessedLetters.filter(letter => {
-      return currentWord.includes(letter);
-    })
-  }, [guessedLetters]);
+  const correctGuesses = useMemo(() => {
+    return new Set(guessedLetters.filter(letter => currentWord.includes(letter))).size;
+  }, [guessedLetters, currentWord]);
 
-  const wrongCount = wrongGuesses().length
-
-  const isOver = wrongCount >= languages.length
-  const won = rightGuesses().length === currentWord.length && wrongCount <= languages.length;
-
+  const wrongCount = wrongGuesses.length;
+  const isOver = wrongCount >= languages.length;
+  const won = correctGuesses === uniqueLettersInWord;
 
   function addGuessedLetter(letter) {
     if (!guessedLetters.includes(letter)) {
@@ -46,7 +42,6 @@ export default function AssemblyEndgame() {
     setCurrentWord(words.random);
   }
 
-
   return (
     <AssemblyContext.Provider value={{
       won,
@@ -57,7 +52,6 @@ export default function AssemblyEndgame() {
       addGuessedLetter,
       languages
     }}>
-
       <main>
         <header>
           <h1>Assembly: Endgame</h1>
@@ -66,55 +60,53 @@ export default function AssemblyEndgame() {
         </header>
         <RenderBanner />
         <div className="languages">
-          {languages.map((language, idx) => {
-            return (
-              <Language
-                key={language.name + idx}
-                idx={idx}
-                {...language}
-              />
-            )
-          })}
+          {languages.map((language, idx) => (
+            <Language
+              key={language.name}
+              idx={idx}
+              {...language}
+            />
+          ))}
         </div>
         <div className="letters">
-          {currentWord.split("").map((letter, idx) => {
-            return <Letter
-              key={letter + idx}
+          {currentWord.split("").map((letter, idx) => (
+            <Letter
+              key={`${letter}-${idx}`}
               letter={letter}
             />
-
-          })}
+          ))}
         </div>
         <section className="sr-only" aria-live="polite" role="status">
-          <p>
-            {
-              currentWord.split('').includes(lastGuessedLetter) ? 
-                `Correct! The letter ${lastGuessedLetter} is in the word` : 
-                `Sorry, the letter ${lastGuessedLetter} is not in the word`
-            }
-          </p>
+          {lastGuessedLetter && (
+            <p>
+              {currentWord.includes(lastGuessedLetter) 
+                ? `Correct! The letter ${lastGuessedLetter.toUpperCase()} is in the word` 
+                : `Sorry, the letter ${lastGuessedLetter.toUpperCase()} is not in the word`}
+            </p>
+          )}
           <p>Current Word: {
-          currentWord.split("").map(
-            letter => guessedLetters.includes(letter) ? letter : 'blank.').join(" ")
+            currentWord.split("").map(
+              letter => guessedLetters.includes(letter) ? letter.toUpperCase() : 'blank'
+            ).join(" ")
           }</p>
         </section>
         <div className="keyboard">
-          {alphabet.split("").map((letter, idx) => {
-            return <Key
-              key={letter + idx}
+          {alphabet.split("").map(letter => (
+            <Key
+              key={letter}
               letter={letter}
             />
-
-          })}
+          ))}
         </div>
-        {(isOver === true) || (won === true) ? <button
-          onClick={handleGameOverClick}
-          type="button"
-          className="new-game">
-          New Game
-
-        </button>
-          : ''}
+        {(isOver || won) && (
+          <button
+            onClick={handleGameOverClick}
+            type="button"
+            className="new-game"
+          >
+            New Game
+          </button>
+        )}
       </main>
     </AssemblyContext.Provider>
   )
